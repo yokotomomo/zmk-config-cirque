@@ -1,1 +1,17 @@
 
+&xiao_spi {
+    status = "okay";
+    cs-gpios = <&xiao_d 1 GPIO_ACTIVE_LOW>; // D1をCS(チップセレクト)に指定
+
+    trackpad: cirque@0 {
+        compatible = "cirque,pinnacle";
+        reg = <0>; // CSピンのインデックス
+        status = "okay";
+        spi-max-frequency = <1000000>;
+        dr-gpios = <&xiao_d 2 GPIO_ACTIVE_HIGH>; // D2をDR(割り込み)に指定
+        
+        /* トラックパッドの向きや感度の設定 */
+        sensitivity = <0x20>;
+        sleep;
+    };
+};
