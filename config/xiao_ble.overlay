@@ -64,7 +64,8 @@
         compatible = "cirque,pinnacle";
         reg = <0x2a>;
         status = "okay";
-        dr-gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH)>; // Cirqueを使う場合はDRピンの定義も推奨されます
+        /* dr-gpios ではなく drdy-gpios に変更 */
+        drdy-gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH)>;
         sensitivity = "2x";
     };
 };
