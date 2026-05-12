@@ -2,10 +2,17 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+    # マウス機能やCirque用ドライバを持つリポジトリを追加
+    - name: zmk-input-behavior-listener
+      url-base: https://github.com/petejohanson
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
+    # Cirque/マウス入力を処理するためのモジュールを追加
+    - name: zmk-input-behavior-listener
+      remote: zmk-input-behavior-listener
+      revision: main
   self:
     path: config
