@@ -33,9 +33,9 @@
         compatible = "cirque,pinnacle";
         reg = <0x2a>;
         status = "okay";
-        
-        /* 最新仕様に合わせて文字列に変更 */
-        sensitivity = "2x";
-        sleep;
+        sensitivity = "2またしても同じパターンのエラーですね！でも安心してください、エラーの読み解き方は前回と全く同じです。
+
+> `devicetree error:x";
+        /* ここにあった sleep; を削除しました */
     };
 };
