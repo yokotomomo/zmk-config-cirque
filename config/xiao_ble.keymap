@@ -1,7 +1,7 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/mouse.h> // マウスキーの定義を読み込む
+#include <dt-bindings/zmk/mouse.h>
 
 / {
     /* トラックパッドの入力をOSにマウスとして伝える設定 */
@@ -14,11 +14,8 @@
         compatible = "zmk,keymap";
         default_layer {
             bindings = <
-                /* * XIAO BLEのピン数に合わせた最小構成の例（1キーのみ）
-                 * 動作確認用に、どこか1ボタンを「A」に設定
-                 */
-              
-  &kp A
+                /* 動作確認用に1ボタンのみ設定 */
+                &kp A
             >;
         };
     };
