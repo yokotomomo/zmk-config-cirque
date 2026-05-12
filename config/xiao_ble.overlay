@@ -7,11 +7,9 @@
     };
 };
 
-/* 1. 新しいピン割り当てルールを作成する */
 &pinctrl {
     i2c0_custom: i2c0_custom {
         group1 {
-            /* D9(P0.09)をSDA、D10(P0.10)をSCLに指定 */
             psels = <NRF_PSEL(TWIM_SDA, 0, 9)>,
                     <NRF_PSEL(TWIM_SCL, 0, 10)>;
         };
@@ -25,7 +23,6 @@
     };
 };
 
-/* 2. 上で作ったルールをI2Cに適用する */
 &xiao_i2c {
     status = "okay";
     pinctrl-0 = <&i2c0_custom>;
@@ -36,7 +33,11 @@
         compatible = "cirque,pinnacle";
         reg = <0x2a>;
         status = "okay";
-        /* D8をDR(割り込み)に指定 */
-        dr-gpios = <&xiao_d 8 (GPIO_ACTIVE_HIGH)>;
+        
+        /* ここにあった dr-gpios の行を削除しました！ */
+        
+        /* 必要に応じて感度などはここに残しておきます */
+        sensitivity = <0x20>;
+        sleep;
     };
 };
