@@ -6,13 +6,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: zmkfirmware/zmk-build-arm:2.5
+      # 最新のZMKビルド環境に合わせてイメージバージョンを更新
+      image: zmkfirmware/zmk-build-arm:3.5
     name: Build
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
       - name: Cache west modules
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         env:
           cache-name: cache-zephyr-modules
         with:
@@ -22,28 +24,43 @@ jobs:
             zephyr/
             bootloader/
             zmk/
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('manifest-dir/west.yml') }}
+          # hashFilesのパスをzmk-configの標準的な位置に修正
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('config/west.yml') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+
       - name: West Init
         run: west init -l config
+
       - name: West Update
         run: west update
+
       - name: West Zephyr export
         run: west zephyr-export
-      - name: West Build (KEYBOARD_TITLE)
-        run: west build -s zmk/app -b BOARD_NAME -- -DSHIELD=SHIELD_NAME -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
-      - name: KEYBOARD_TITLE DTS File
+
+      - name: West Build
+        # BOARD_NAMEなどは適宜自分の環境に合わせて書き換えてください
+        # 例: -b seeeduino_xiao_ble
+        run: west build -s zmk/app -b seeeduino_xiao_ble -- -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+
+      - name: DTS File
         if: ${{ always() }}
-        run: cat -n build/zephyr/BOARD_NAME.dts.pre.tmp
-      - name: KEYBOARD_TITLE Kconfig file
-        run: cat build/zephyr/.config | grep -v "^#" | grep -v "^$"
+        # エラー時にデバッグしやすくなるよう、ファイルが存在する場合のみ実行
+        run: |
+          if [ -f build/zephyr/seeeduino_xiao_ble.dts.pre.tmp ]; then
+            cat -n build/zephyr/seeeduino_xiao_ble.dts.pre.tmp
+          fi
+
+      - name: Kconfig file
+        run: grep -v "^#" build/zephyr/.config | grep -v "^$" || true
+
       - name: Rename zmk.uf2
-        run: cp build/zephyr/zmk.uf2 SHIELD_NAME_BOARD_NAME.uf2
-      - name: Archive (KEYBOARD_TITLE)
-        uses: actions/upload-artifact@v2
+        run: cp build/zephyr/zmk.uf2 firmware.uf2
+
+      - name: Archive
+        uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: SHIELD_NAME_BOARD_NAME.uf2
+          path: firmware.uf2
