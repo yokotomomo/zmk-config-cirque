@@ -34,8 +34,6 @@
         reg = <0x2a>;
         status = "okay";
         sensitivity = "2x";
-
-> `devicetree error:x";
         /* ここにあった sleep; を削除しました */
     };
 };
