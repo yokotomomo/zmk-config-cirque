@@ -4,8 +4,7 @@ name: Build
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    env:
+    runs-on: ubuntu-latestenv:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     
     container:
@@ -14,14 +13,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-    container:
-      # 最新のZMKビルド環境に合わせてイメージバージョンを更新
-      image: zmkfirmware/zmk-build-arm:3.5
-    name: Build
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Cache west modules
         uses: actions/cache@v4
         env:
