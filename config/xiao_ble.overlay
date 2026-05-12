@@ -65,8 +65,7 @@
         compatible = "cirque,pinnacle";
         reg = <0x2a>;
         status = "okay";
-        /* dr-gpios や drdy-gpios でエラーが出る場合、interrupt-gpios を試します */
-        interrupt-gpios = <&gpio1 12 (GPIO_ACTIVE_HIGH)>;
+        /* エラーの原因となる GPIO 指定をすべて削除し、最小構成にします */
         sensitivity = "2x";
         sleep-mode;
     };
