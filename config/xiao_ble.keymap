@@ -1,0 +1,7 @@
+/ {
+    /* トラックパッドの入力をマウスカーソルの動きに変換 */
+    trackpad_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackpad>;
+    };
+};
