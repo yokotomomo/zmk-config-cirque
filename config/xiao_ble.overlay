@@ -65,9 +65,8 @@
         compatible = "cirque,pinnacle";
         reg = <0x2a>;
         status = "okay";
-        /* DRを D7 (P1.12) に設定 */
-        /* &gpio1 であることと、ピン番号 12 になることに注目してください */
-        drdy-gpios = <&gpio1 12 (GPIO_ACTIVE_HIGH)>;
+        /* 正解は dr-gpios でした。ピンは D7 (P1.12) を使用 */
+        dr-gpios = <&gpio1 12 (GPIO_ACTIVE_HIGH)>;
         sensitivity = "2x";
     };
 };
