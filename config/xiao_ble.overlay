@@ -2,13 +2,24 @@
 #include <dt-bindings/zmk/matrix_transform.h>
 
 / {
+    /* --- ここから追加 --- */
+    aliases {
+        led-red = &led0;
+        led-green = &led1;
+        led-blue = &led2;
+        led_red = &led0;
+        led_green = &led1;
+        led_blue = &led2;
+    };
+    /* --- ここまで追加 --- */
+
     chosen {
         zmk,kscan = &kscan0;
         zmk,matrix-transform = &default_transform;
         zmk,physical-layout = &physical_layout0;
     };
 
-    /* 1キーのみのダミーマトリックス配置 */
+    /* 以下、既存のコード ... */
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
         columns = <1>;
@@ -16,14 +27,12 @@
         map = < RC(0,0) >;
     };
 
-    /* 1キーのみの物理レイアウト定義（最新のZMKで必要） */
     physical_layout0: physical_layout_0 {
         compatible = "zmk,physical-layout";
         display-name = "Default Layout";
         transform = <&default_transform>;
     };
 
-    /* D0ピン(P0.02)をスイッチ入力として定義 */
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-direct";
         wakeup-source;
@@ -32,6 +41,7 @@
 };
 
 &pinctrl {
+    /* 既存の pinctrl 設定 ... */
     i2c0_custom: i2c0_custom {
         group1 {
             psels = <NRF_PSEL(TWIM_SDA, 0, 9)>,
@@ -57,6 +67,7 @@
         compatible = "cirque,pinnacle";
         reg = <0x2a>;
         status = "okay";
+        dr-gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH)>; // Cirqueを使う場合はDRピンの定義も推奨されます
         sensitivity = "2x";
     };
 };
