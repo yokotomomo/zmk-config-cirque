@@ -45,9 +45,8 @@ jobs:
         run: west zephyr-export
 
       - name: West Build
-        # ボード名はXIAO BLEを指定
-        run: west build -s zmk/app -b seeeduino_xiao_ble -- -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
-
+        run: west build -s zmk/app -b xiao_ble -- -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+        
       - name: Rename zmk.uf2
         run: cp build/zephyr/zmk.uf2 xiao_ble_firmware.uf2
 
