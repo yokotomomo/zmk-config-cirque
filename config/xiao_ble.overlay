@@ -2,13 +2,11 @@
 #include <dt-bindings/zmk/matrix_transform.h>
 
 / {
-    /* --- ここから追加 --- */
     aliases {
         led-red = &led0;
         led-green = &led1;
         led-blue = &led2;
     };
-    /* --- ここまで追加 --- */
 
     chosen {
         zmk,kscan = &kscan0;
@@ -65,7 +63,7 @@
         reg = <0x2a>;
         status = "okay";
         /* dr-gpios ではなく drdy-gpios に変更 */
-        drdy-gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH)>;
+        drdy-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH)>;;
         sensitivity = "2x";
     };
 };
