@@ -5,12 +5,12 @@ name: Build
 jobs:
   build:
     runs-on: ubuntu-latest
-    # 2026年9月のNode.js 20廃止に伴う警告を解消し、Node.js 24で実行する設定
+    # ここが重要：Node.js 24への強制移行を「承諾」する設定
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     
     container:
-      # 最新のZMKビルド環境イメージ
+      # ZMKビルド環境も最新の3.5を維持
       image: zmkfirmware/zmk-build-arm:3.5
     
     name: Build
@@ -45,18 +45,8 @@ jobs:
         run: west zephyr-export
 
       - name: West Build
-        # ボード名に seeeduino_xiao_ble を指定
+        # ボード名はXIAO BLEを指定
         run: west build -s zmk/app -b seeeduino_xiao_ble -- -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
-
-      - name: DTS File (Debug)
-        if: ${{ always() }}
-        run: |
-          if [ -f build/zephyr/seeeduino_xiao_ble.dts.pre.tmp ]; then
-            cat -n build/zephyr/seeeduino_xiao_ble.dts.pre.tmp
-          fi
-
-      - name: Kconfig file (Debug)
-        run: grep -v "^#" build/zephyr/.config | grep -v "^$" || true
 
       - name: Rename zmk.uf2
         run: cp build/zephyr/zmk.uf2 xiao_ble_firmware.uf2
