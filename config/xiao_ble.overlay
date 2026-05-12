@@ -1,20 +1,22 @@
-&xiao_spi {
+/ {
+    trackpad_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackpad>;
+    };
+};
+
+&xiao_i2c {
     status = "okay";
-    /* D10をSCK、D9をMOSI、D7をMISOに割り当てる例 */
-    sck-pin = <10>;   
-    mosi-pin = <9>;   
-    miso-pin = <7>;   // MISO用のピンも一つ決める必要があります（例としてD7）
+    /* D10をSCL、D9をSDAに再定義 */
+    scl-pin = <10>;
+    sda-pin = <9>;
 
-    /* CS（チップセレクト）をD1などに割り当て */
-    cs-gpios = <&xiao_d 1 GPIO_ACTIVE_LOW>; 
-
-    trackpad: cirque@0 {
+    trackpad: cirque@2a {
         compatible = "cirque,pinnacle";
-        reg = <0>;
+        reg = <0x2a>;
         status = "okay";
-        spi-max-frequency = <1000000>;
-        /* D8をDR（Data Ready）に指定 */
-        dr-gpios = <&xiao_d 8 GPIO_ACTIVE_HIGH>;
+        /* D8をDR(割り込み)に指定 */
+        dr-gpios = <&xiao_d 8 (GPIO_ACTIVE_HIGH)>;
         
         sensitivity = <0x20>;
         sleep;
