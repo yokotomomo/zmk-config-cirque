@@ -34,10 +34,8 @@
         reg = <0x2a>;
         status = "okay";
         
-        /* ここにあった dr-gpios の行を削除しました！ */
-        
-        /* 必要に応じて感度などはここに残しておきます */
-        sensitivity = <0x20>;
+        /* 最新仕様に合わせて文字列に変更 */
+        sensitivity = "2x";
         sleep;
     };
 };
