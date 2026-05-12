@@ -7,9 +7,6 @@
         led-red = &led0;
         led-green = &led1;
         led-blue = &led2;
-        led_red = &led0;
-        led_green = &led1;
-        led_blue = &led2;
     };
     /* --- ここまで追加 --- */
 
